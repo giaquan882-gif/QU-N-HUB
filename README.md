@@ -1,5 +1,4 @@
-# QUÂN-HUB
-Cái này khó nhằng
+--QUÂN-HUB
 local CoreGui = game:GetService("CoreGui")
 local Players = game:GetService("Players")
 local UserInputService = game:GetService("UserInputService")
