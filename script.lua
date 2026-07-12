@@ -1,13 +1,14 @@
-local CoreGui = game:GetService("CoreGui")
 local Players = game:GetService("Players")
 local UserInputService = game:GetService("UserInputService")
 local LocalPlayer = Players.LocalPlayer
+local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 
-if CoreGui:FindFirstChild("QuânHub") then CoreGui.QuânHub:Destroy() end
+-- Xóa menu cũ nếu đã tồn tại
+if PlayerGui:FindFirstChild("QuânHub") then PlayerGui.QuânHub:Destroy() end
 
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "QuânHub"
-ScreenGui.Parent = CoreGui
+ScreenGui.Parent = PlayerGui
 ScreenGui.ResetOnSpawn = false
 
 local MainFrame = Instance.new("Frame")
@@ -21,6 +22,7 @@ MainFrame.Parent = ScreenGui
 
 local Title = Instance.new("TextLabel")
 Title.Size = UDim2.new(0, 200, 0, 40)
+Title.Position = UDim2.new(0, 10, 0, 5)
 Title.BackgroundColor3 = Color3.fromRGB(40, 40, 50)
 Title.Text = "QUÂN HUB"
 Title.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -32,6 +34,7 @@ local UIListLayout = Instance.new("UIListLayout")
 UIListLayout.Parent = MainFrame
 UIListLayout.Padding = UDim.new(0, 5)
 UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+UIListLayout.Padding = UDim.new(0, 10) -- Tạo khoảng cách cho đẹp
 
 local function createButton(text, callback)
     local btn = Instance.new("TextButton")
@@ -44,12 +47,14 @@ local function createButton(text, callback)
     return btn
 end
 
+-- Cấu hình thông số
 local WalkSpeed = 100
 local JumpPower = 120
 local InfJumpEnabled = false
 
 local SpeedBtn = createButton("Speed: OFF", function()
-    local hum = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Humanoid")
+    local char = LocalPlayer.Character
+    local hum = char and char:FindFirstChild("Humanoid")
     if hum then
         if hum.WalkSpeed ~= WalkSpeed then
             hum.WalkSpeed = WalkSpeed
@@ -62,7 +67,8 @@ local SpeedBtn = createButton("Speed: OFF", function()
 end)
 
 local JumpBtn = createButton("High Jump: OFF", function()
-    local hum = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Humanoid")
+    local char = LocalPlayer.Character
+    local hum = char and char:FindFirstChild("Humanoid")
     if hum then
         if hum.JumpPower ~= JumpPower then
             hum.JumpPower = JumpPower
@@ -81,10 +87,10 @@ end)
 
 UserInputService.JumpRequest:Connect(function()
     if InfJumpEnabled then
-        local hum = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Humanoid")
+        local char = LocalPlayer.Character
+        local hum = char and char:FindFirstChild("Humanoid")
         if hum then hum:ChangeState("Jumping") end
     end
 end)
 
 createButton("Close Menu", function() ScreenGui:Destroy() end)
-
