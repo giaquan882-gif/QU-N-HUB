@@ -3,7 +3,6 @@ local UserInputService = game:GetService("UserInputService")
 local LocalPlayer = Players.LocalPlayer
 local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 
--- Xóa menu cũ nếu đã tồn tại
 if PlayerGui:FindFirstChild("QuânHub") then PlayerGui.QuânHub:Destroy() end
 
 local ScreenGui = Instance.new("ScreenGui")
@@ -32,9 +31,8 @@ Title.Parent = MainFrame
 
 local UIListLayout = Instance.new("UIListLayout")
 UIListLayout.Parent = MainFrame
-UIListLayout.Padding = UDim.new(0, 5)
+UIListLayout.Padding = UDim.new(0, 10)
 UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
-UIListLayout.Padding = UDim.new(0, 10) -- Tạo khoảng cách cho đẹp
 
 local function createButton(text, callback)
     local btn = Instance.new("TextButton")
@@ -47,7 +45,6 @@ local function createButton(text, callback)
     return btn
 end
 
--- Cấu hình thông số
 local WalkSpeed = 100
 local JumpPower = 120
 local InfJumpEnabled = false
@@ -92,5 +89,6 @@ UserInputService.JumpRequest:Connect(function()
         if hum then hum:ChangeState("Jumping") end
     end
 end)
+
 
 createButton("Close Menu", function() ScreenGui:Destroy() end)
